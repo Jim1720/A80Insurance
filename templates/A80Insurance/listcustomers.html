@@ -1,0 +1,132 @@
+
+{% extends "main.html" %} 
+ 
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+
+
+<style>
+
+    
+h1 { color: white; }
+
+body { background-color: black; }  
+
+#center { margin-left: 30%; margin-top: 50px; } 
+
+
+.ba { color: white; background-color: dodgerblue; border-radius: 10px; padding: 5px;
+      font-family: arial; font-size: large; margin-top: 20px; margin-bottom: 20px; }
+
+      
+.ba2 { color: white;  background-color: green; border-radius: 10px; padding: 5px;
+      font-family: arial; font-size: large; margin-top: 20px; margin-bottom: 20px; }
+
+.lit { color: white; font-family: arial; font-size: larger; margin-top: 20px; }
+
+.ps { margin-left: 370px; margin-bottom: 50px; font-family: arial; font-size: x-large; }
+
+.white { color: white; }
+
+.aqua { color: aqua; }
+
+.space { margin-top: 10px; }
+
+.blue { color: dodgerblue;}
+
+.ft { font-size: larger; font-family: arial;}
+
+.top { margin-top: 40px;}
+
+.a1 { margin-left: 120px; }
+
+.f1 { font-family: arial; font-size: larger;}
+
+.btnrow { margin-top: 15px; }
+
+.left1 { margin-left: 200px; }
+
+.left { margin-left: 36px; }
+
+.lefth2 { margin-left: 350px; }
+
+.btnrow { margin-top: 20px; margin-bottom: 20px;}
+ 
+ .sub { margin-top: 20px; margin-left: 430px; border-radius: 10px; font-family:arial; font-size:larger;}
+
+ 
+
+</style> 
+
+<fieldset>  
+    <form  action="{% url 'A80Insurance:action' %}"  method="post"> 
+
+    {% csrf_token %}  
+
+    <div class="container">
+        
+         <h2 class="lefth2 burleywood">Customer List</h2>
+    
+        {% for c in customerData %} 
+
+        <div class="row top">
+            <div class="col-md-3 white ft"> 
+                 Customer Id  
+            </div>
+            
+            <div class="col-md-3 white ft"> 
+                  Customer Name   
+           </div>
+            <div class="col-md-3 white ft"> 
+                  Password
+            </div>
+            <div class="col-md-3 white ft"> 
+                  Application Id
+            </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3 burleywood ft"> 
+
+             {{ c.custId }}  
+
+        </div>
+        
+      
+        <div class="col-md-3 blue ft"> 
+
+            {{c.custFirst}}  {{c.custLast}}
+        </div>
+
+        <div class="col-md-3 blue ft"> 
+
+             Not Available
+
+        </div>
+
+        <div class="col-md-3 burleywood ft"> 
+
+            {{c.appId}}
+
+       </div>
+
+    </div> 
+    
+    {% endfor %}
+
+    
+<div class="form-group row"> 
+      <input class="btn-primary sub" type="submit" name="commit" value="Return"> 
+</div>
+
+</div>   <!-- container -->  
+
+</fieldset>  
+</form>  
+{% endblock %}

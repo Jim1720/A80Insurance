@@ -1,0 +1,246 @@
+   
+{% extends "main.html" %} 
+ 
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+
+
+<style>
+    
+    body { background-color: black; }
+    
+    .left { margin-left: 25%}
+    
+    label { color: white; font-family: arial; font-size: large;} 
+    
+    input { color: white; font-family: arial; font-size: large;}
+    
+    .r1 { margin-left: 20px;} 
+    
+    .r2 {  margin-top: 30px; margin-left: 240px; border-radius: 10px; padding-left: 25px; 
+           padding-right: 25px; }
+
+          
+    .r3 {  margin-top: 25px; margin-left: 40%; border-radius: 10px; padding-left: 25px; 
+           padding-right: 25px; }
+    
+    #center { margin-left: 10%; margin-top: 50px; }
+
+    .burleywood { color: burleywood; }
+
+    .aqua { color: aqua; }
+
+    .message { margin-left: 20px; font-size:large; font-family: arial;}
+
+    .w1 { width: 220px; }
+
+    .h1 { height: 40px; } 
+
+    .opt1 { font-family:arial; font-size: larger;} 
+    
+    .rb { margin-top: 35px; }
+    
+    </style>
+
+    
+<fieldset> 
+  
+<form  action="{% url 'A80Insurance:update'%}"  method="post">
+
+{% csrf_token %} 
+
+
+     <div class="container">
+    
+     <h1 class="left burleywood">Customer Update</h1>
+    
+     <div id="center">
+    
+     <div id="namerow" class="row"> 
+     
+    
+     <div class="form-group row"> 
+    
+         <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_password">Password:</label>
+             <br><input class="form-control" type="password" value="{{customer.custpassword}}"
+                        name="custpassword" id="custpassword"> 
+       </div>
+    
+         <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_confirm">Confirm:</label>
+             <br><input class="form-control" type="password" value="{{customer.encrypted}}"
+                        name="encrypted" id="encrypted"> 
+       </div>
+     
+    
+    </div>
+    
+     <div class="form-group row">
+    
+        <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_first">First Name:</label>
+             <br><input class="form-control" type="text" value="{{customer.first_name}}"
+                        name="custfirst" id="custfirst"> 
+       </div>
+    
+         <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_middle">Middle:</label>
+             <br><input class="form-control" type="text" value="{{customer.middle_name}}"
+                        name="custmiddle" id="custmiddle"> 
+       </div>
+    
+    
+         <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_last">Last:</label>
+             <br><input class="form-control" type="text" value="{{customer.last_name}}" 
+                        name="custlast" id="custlast"> 
+       </div>
+    
+        <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_birth">Birth Date:</label>
+             <br><input class="form-control" type="text"  value="{{customer.birth_date}}" 
+                        name="custbirthdate" id="custbirthdate"> 
+       </div>
+    
+       </div>
+    
+        <div class="form-group row">
+    
+            <div class="col-xs-2 r1">
+                <label class="control-label" for="addr1">Address 1:</label>
+                <br><input class="form-control" type="text"  value="{{customer.address_1}}" 
+                           name="custaddr1" id="custaddr1"> 
+          </div>
+    
+            <div class="col-xs-2 r1">
+                <label class="control-label" for="addr2">Address 2:</label>
+                <br><input class="form-control" type="text" value="{{customer.address_2}}"  
+                           name="custaddr2" id="custaddr2"> 
+          </div> 
+    
+          <div class="col-sm-2 r1">
+            <label class="control-label" for="custgender">Gender :</label>
+            <br/><select class="form-control w1" name="custgender" id="custgender">  
+                {% if customer.gender == "M" %} 
+                <option class="opt1 w1 h1" selected value="M">M</option>   
+                <option class="opt1 w1 h1" value="F">F</option>
+                {% endif %}  
+                {% if customer.gender == "F" %} 
+                <option class="opt1 w1 h1" value="M">M</option>   
+                <option class="opt1 w1 h1" selected value="F">F</option>
+                {% endif %}  
+            </select>
+            <br/> 
+         </div>   
+
+            <!--div class="col-sm-1 r1">
+                <label class="control-label" for="gender">Gender:</label>
+                <br><input   class="form-control" type="text" value="{{customer.gender}}" 
+                           name="custgender" id="custgender"> 
+          </div--> 
+    
+       </div>
+    
+        <div class="form-group row">
+    
+            <div class="col-xs-2 r1">
+                <label class="control-label" for="phone">Phone Number:</label>
+                <br><input class="form-control" type="text" value="{{customer.phone}}"  
+                           name="custphone" id="custphone"> 
+          </div>
+    
+            <div class="col-xs-2 r1">
+                <label class="control-label" for="email">e-mail:</label>
+                <br><input class="form-control" type="text" value="{{customer.email}}"  
+                     name="custemail" id="custemail"> 
+          </div> 
+    
+          <div class="col-xs-2 r1">
+            <label class="control-label" for="email">Plan:</label>
+            <br>  <label class="control-label aqua">{{customer.plan}}</label>
+         </div> 
+
+         <div class="col-xs-2 r1">
+                <input class="btn-primary r3 rb" type="submit" name="commit" value="Update"
+                data-disable-with="Update Customer"> 
+        </div>  
+
+       </div>
+    
+       <div class="form-group row">
+    
+        <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_city">City:</label>
+             <br><input class="form-control" type="text" value="{{customer.city}}" 
+                        name="custcity" id="custcity"> 
+       </div>
+
+       <div class="col-xs-2 r1">
+        <label class="control-label" for="state">State :</label>
+        <br/><select class="form-control w1" name="custstate" id="custstate"> 
+            {% if customer.state == "WA" %} 
+                <option class="opt1 w1 h1" selected value="WA">WA</option>   
+                <option class="opt1 w1 h1" value="CA">CA</option>  
+            {% endif %}
+            {% if customer.state == "CA" %} 
+                <option class="opt1 w1 h1" value="WA">WA</option>   
+               <option class="opt1 w1 h1"  selected value="CA">CA</option>  
+            {% endif %}
+        </select>
+        <br/> 
+     </div>   
+    
+         <!--div class="col-xs-2 r1">
+             <label class="control-label" for="customer_state">State:</label>
+             <br><input class="form-control" type="text"  value="{{customer.state}}" 
+                        name="custstate" id="custstate"> 
+       </div-->
+     
+
+         <div class="col-xs-2 r1">
+             <label class="control-label" for="customer_zip">Zip:</label>
+             <br><input class="form-control" type="text"  value="{{customer.zip}}"
+                        name="custzip" id="custzip"> 
+       </div> 
+    
+   </div> 
+
+ 
+    
+    </div> <!-- end center --> 
+
+     <!-- hidden customer id field on update screen -->
+     <input style="display: hidden" 
+            type="hidden"  value="{{customer.custid}}"
+            name="custId" id="custId"> 
+</div>
+   
+
+     </div>   <!-- container --> 
+
+
+</fieldset> 
+
+<div>
+
+  <div id="message" class="message burleywood"  style="margin-left: 20%; color:white"> 
+      {{message}}
+  </div>
+
+</div> 
+
+</form> 
+
+
+{% endblock %}
+ 
+ 
+
+
+ 
+ 

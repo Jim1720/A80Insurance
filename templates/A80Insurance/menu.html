@@ -1,0 +1,53 @@
+
+{% extends "main.html" %} 
+
+<!DOCTYPE html>
+
+{% load static %}  
+
+<link href="{% static 'd80insurance/app.css' %}">
+ 
+{% block page %}
+
+
+<style>
+
+ body { background-color: black; }
+
+ .burleywood { color: burleywood; }
+
+ .b1 { margin-left: 100px;}
+ 
+ .st { padding-left: 15px; padding-right: 15px; border-width: 1px; border-radius: 10px; }
+
+ .title { font-family:arial; font-size:larger;} 
+ 
+ .message { margin-left: 350px; margin-top: 10px; font-size:large; font-family: arial;}
+
+</style> 
+
+<div class="container"> 
+
+    <div style='margin-left: 280px; margin-top: 5px;'>
+        <div class="row justify-content-left title burleywood"> 
+                <h2 display-2> The Insurance Company Main Menu</h2> 
+        </div>
+    </div> 
+
+    <div class="row-md-6">  
+        <img alt="Second slide" src="{% static '/A80Insurance/images/rock.JPG' %}"
+             class="r1 img-fluid" style="margin: 10px"> 
+    </div>
+
+    <div id="bottombuttons" style="margin-left: 240px; margin-top: 10px;">
+          <a type="button" class="st btn btn-primary"    href="{% url 'A80Insurance:update' %}">Update</a>
+          <a type="button" class="st b1 btn btn-primary" href="{% url 'A80Insurance:claim' %}">Claim</a>
+          <a type="button" class="st b1 btn btn-primary" href="{% url 'A80Insurance:history' %}">History</a> 
+          <a type="button" class="st b1 btn btn-primary" href="{% url 'A80Insurance:signout' %}">Sign Out</a>  
+    </div> 
+
+    <div id="message" class="message"  style="color:white"> 
+            {{message}}
+   </div>
+
+{% endblock %}

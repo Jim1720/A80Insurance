@@ -1,0 +1,73 @@
+
+{% extends "main.html" %} 
+ 
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+
+
+<style>
+    
+    body { background-color: black; }
+
+    .left { margin-left: 250px; }
+ 
+
+    .t3 { margin-top: 50px; }
+
+    .f3 { font-family: arial; font-size: large; }
+
+    .r3 { border-radius: 5px;}
+
+    .white { color: white;}
+
+    .left { margin-left: 250px; }
+
+    .a2 { margin-left: 50px; }
+
+    h2 { margin-bottom: 100px; }
+
+    
+
+</style> 
+<fieldset>  
+<form  action="{% url 'A80Insurance:plan'%}"  method="post"> 
+{% csrf_token %}  
+<div class="container">
+    
+     <h2 class="left burleywood">Select a plan</h2>
+
+    {% for p in screenData %}
+
+    <div id="selectrow" class="row"> 
+
+        <input class="btn-primary  left r3 t3 f3" type="submit" name="commit" value="{{p.name}}">
+        <label class="control-label a2  t3 f3 white">{{p.literal}}</label>
+
+    </div>
+
+    {% endfor %}
+    
+    <div>
+        <input class="btn-primary left t3 r3 f3" type="submit" name="commit" value="Menu"> 
+    </div> 
+
+ </div>   <!-- container -->  
+</fieldset>  
+</form>  
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+</div>

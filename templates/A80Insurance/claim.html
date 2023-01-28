@@ -1,0 +1,305 @@
+{% extends "main.html" %}  
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+
+<link href="{% static 'A80Insurance/javascript.js' %}">
+ 
+{% block page %}
+
+
+<style>
+    
+    body { background-color: black; }
+
+    .left { margin-left: 35%}
+    
+    label { color: white; font-family: arial; font-size: large;} 
+    
+    input { color: white; font-family: arial; font-size: large;}
+    
+    .r1 { margin-left: 20px;} 
+    
+    .r2 {  margin-top: 30px; margin-left: 240px; border-radius: 10px; padding-left: 25px; 
+           padding-right: 25px; }
+
+          
+    .r3 {  margin-top: 25px; margin-left: 25%; border-radius: 10px; padding-left: 25px; 
+           padding-right: 25px; }
+    
+    #center { margin-left: 20%; margin-top: 50px; }
+
+    .burleywood { color: burleywood; }
+
+    .message { margin-left: 20px; font-size:large; font-family: arial;}
+
+    .opt1 { font-family:arial; font-size: larger;}
+
+    .w1 { width: 220px; }
+
+     .h1 { height: 40px; }
+
+     .a1 { margin-top: 20px;}
+
+     .t1 { margin-left: 18px;}
+
+     .release { margin-left: 25px;}
+
+     .d1 { margin-top: 35px;}
+
+    
+</style> 
+
+<fieldset> 
+  
+<form  action="{% url 'A80Insurance:claim'%}"  method="post">
+    
+    {% csrf_token %} 
+    
+    <!-- use $('body').on('click', selector, func) -->
+    
+         <div class="container" id="claimscreen">
+        
+         <h1 class="left burleywood">Claim Add</h1>
+        
+         <div class="row"> 
+
+            <div class="col-md-2" style="margin-top: 70px">   
+ 
+
+                   <button class="st1 btn btn-primary a1" 
+                            name="commit"
+                            type="submit"
+                            value="Medical">
+                            Medical 
+                    </button>
+ 
+
+                 
+
+                    <button class="st1 btn btn-info a1"
+                            name="commit"
+                            type="submit"
+                            value="Dental"> 
+                            Dental &nbsp;
+                    </button>
+  
+                    
+                    <button class="st1 btn btn-warning a1"
+                            name="commit"
+                            type="submit"
+                            value="Vision"> 
+                            Vision &nbsp;
+                    </button>
+ 
+
+                 
+                    
+                    <button class="st1 btn btn-success a1"  
+                             name="commit"
+                             type="submit"
+                             value="Drug"> 
+                             Drug &nbsp; &nbsp;
+                    </button>
+ 
+
+                 
+         </div>  
+
+         <div class="col-md-10">   
+            <div class="form-group row"> 
+                <div class="col-xs-2 r1">
+                    <label class="control-label" for="first">Patient First:</label>
+                    <br/><input class="form-control" type="text"  value="{{claim.first_name}}"
+                                name="first" id="first"> 
+               </div> 
+
+               <div class="col-xs-2 r1">
+                    <label class="control-label" for="last">Patient Last:</label>
+                    <br/><input class="form-control" type="text"  value="{{claim.last_name}}"
+                                name="last" id="last"> 
+               </div> 
+
+               <div class="col-xs-2 r1">
+                   <label class="control-label" for="desc">Description:</label>
+                   <br/><input class="form-control" type="text"  value="{{claim.description}}"
+                            name="desc" id="desc"> 
+              </div>  
+            </div>
+ 
+             <div class="form-group row"> 
+                    <div class="col-xs-2 r1">
+                       <label class="control-label" for="diag1">Diagnosis 1:</label>
+                       <br/><input class="form-control" type="text"  value="{{claim.diagnosis1}}"
+                                name="diag1" id="diag1"> 
+                   </div>
+
+                    <div class="col-xs-2 r1">
+                        <label class="control-label" for="diag2">Diagnosis 2:</label>
+                        <br/><input class="form-control" type="text"  value="{{claim.diagnosis2}}"
+                                    name="diag2" id="diag2"> 
+                    </div>  
+
+                    <div class="col-xs-5 r1">
+                        <label class="control-label" for="service">{{serviceLiteral}} :</label>
+                        <br/><select class="form-control w1" name="service" id="service"> 
+                        {% for service in services %}
+
+                            {% if selectedService == service %}
+                                <option selected class="opt1 w1 h1" value="{{service}}">{{service}}</option> 
+                            {% endif %}
+
+                            {% if selectedService != service %}
+                                <option class="opt1 w1 h1" value="{{service}}">{{service}}</option> 
+                            {% endif %}
+
+                        {% endfor %}
+                        </select>
+                        <br/> 
+                    </div>   
+              </div>
+ 
+            <div class="form-group row"> 
+                <div class="col-xs-2 r1">
+                    <label class="control-label" for="proc1">Procedure 1:</label>
+                    <br/><input class="form-control" type="text"  value="{{claim.procedure1}}"
+                                name="proc1" id="proc1"> 
+                </div>
+
+                <div class="col-xs-2 r1">
+                        <label class="control-label" for="proc2">Procedure 2:</label>
+                        <br/><input class="form-control" type="text"  value="{{claim.procedure2}}"
+                                    name="proc2" id="proc2"> 
+                </div> 
+                
+                      
+                <div class="col-xs-2 r1">
+                    <label class="control-label" for="dos">Date of Service :</label>
+                    <br/><input class="form-control" type="text"  value="{{claim.date_service}}"
+                                    name="dateservice" id="dateservice"> 
+                </div>   
+           </div>
+   
+        <div class="form-group row"> 
+            <div class="col-xs-2 r1">
+                <label class="control-label" for="phys">Physician:</label>
+                <br/><input class="form-control" type="text"  value="{{claim.physican}}"
+                            name="phys" id="phys"> 
+            </div>
+
+             <div class="col-xs-2 r1">
+                <label class="control-label" for="clinic">Clinic:</label>
+                <br/><input class="form-control" type="text"  value="{{claim.clinic}}"
+                            name="clinic" id="clinic"> 
+            </div>   
+            
+            <div class="col-xs-2 r1">
+                <label class="control-label" for="referral">Referral:</label>
+                <br/><input class="form-control" type="text"  value="{{claim.referral}}"
+                            name="referral" id="referral"> 
+            </div> 
+       </div> 
+    <div class="form-group row">
+        
+        <div class="col-xs-2 r1">
+            <label class="control-label" for="location">Location:</label>
+            <br/><input class="form-control" type="text"  value="{{claim.location}}"
+                        name="location" id="location"> 
+        </div>
+        
+        <div class="col-xs-2 r1">
+          <input class="btn-primary r3 d1" type="submit" name="commit" value="Add Claim">  
+        </div>
+
+        <div class="col-xs-2 r1">
+           {% if showPlanButton == "Yes" %}  
+              <input class="btn-primary r3 d1" type="submit" name="commit" value="Assign Plan"> 
+           {% endif %} 
+        </div>
+
+    </div>
+
+    <!--- type field row data depending on claim type -->
+
+    {%  if request.session.ClaimType == "m" %}
+
+    <div id="ShowMedicalFields" class="col-xs-2 t1"> 
+        <div class="form-group row">
+            <div>
+                <label class="control-label" for="confine">Date Confined:</label>
+                <br/><input class="form-control" type="text"  value="{{claim.date_confine}}"
+                            name="confine" id="confine"> 
+            </div>
+            <div class="release">
+                <label class="control-label" for="release">Date Released:</label>
+                <br/><input class="form-control" type="text"  value="{{claim.date_release}}"
+                            name="release" id="release"> 
+            </div> 
+        </div>
+    </div>
+
+    {% endif %}  
+
+    {%  if request.session.ClaimType == "d" %}
+
+    <div id="ShowDentalField" class="col-xs-2 t1">
+        <div class="form-group row">
+            <div>
+                <label class="control-label" for="tooth">Tooth Number:</label>
+                <br/><input class="form-control" type="text"  value="{{claim.tooth_number}}"
+                            name="tooth_number" id="tooth_number"> 
+            </div>
+        </div> 
+    </div>
+
+    {% endif %}  
+
+    
+    {%  if request.session.ClaimType == "v" %}
+
+    <div id="ShowVisionField" class="col-xs-2 t1">
+        <div class="form-group row">
+        <div>
+            <label class="control-label" for="eyeware">Eyeware:</label>
+            <br/><input class="form-control" type="text"  value="{{claim.eye_ware}}"
+                        name="eyeware" id="eyeware"> 
+        </div> 
+        </div>
+    </div>
+
+    {% endif %}  
+
+    
+    {%  if request.session.ClaimType == "x" %}
+
+    <div id="ShowDrugField" class="col-xs-2 t1">
+        <div class="form-group row">
+        <div>
+            <label class="control-label" for="drugname">Drug Name:</label>
+            <br/><input class="form-control" type="text"  value="{{claim.drug_name}}"
+                        name="drugname" id="drugname"> 
+        </div> 
+        </div>
+    </div>  
+    
+    {% endif %}  
+
+    <div id="message" class=" message"  style="color:white"> 
+                  {{message}}
+   </div>
+
+</div> 
+  
+</div>   <!-- container -->  
+<div>
+     
+</form> 
+
+
+{% endblock %}
+
+
+
+
+

@@ -1,0 +1,78 @@
+  
+ 
+{% extends "main.html" %}
+
+{% load static %}  
+
+<link href="{% static 'd80insurance/app.css' %}">
+ 
+{% block page %}
+
+<style>
+
+
+body { background-color: black; }
+
+.toptitle { margin-left: 300px; margin-top: 100px; }
+   
+ .white { color: white; }
+
+ .lightgray {color: lightgray; } 
+
+ .t1 { font-family: arial; font-size: large;}
+
+  button { color: lightgray; background-color: black; font-family: arial; font-size:large;}
+
+  .burleywood { color: burlywood;}
+
+  .aqua { color: aqua;}
+
+  .c1 { margin-left:5px;}
+
+
+
+</style>
+ 
+
+<div class="container"> 
+ 
+ 
+    <h1  class="burleywood"
+         style=" font-family: arial; margin-left: 280px; margin-top: 10px" > The Insurance Company</h1> 
+    
+    <div class="row-md-6" style="margin-top: 50px;"> 
+        <img alt="Second slide" src="{% static '/A80Insurance/images/rock.JPG' %}"
+             class="r1 img-fluid" style="margin-left:100px;margin-top: 20px" width="80%"> 
+    </div>
+
+    <div class="row">
+
+    </div>
+
+   
+<footer  style="margin-left:80px; margin-top:80px;"> 
+    <!-- a60 additions at bottom -->  
+    <span class='t1' style='color:gray;'>Find out info here</span>  
+    <a href="{% url 'A80Insurance:info' %}" class='t1' style="color: white">Information</a>
+    <span class='t1' style='color:gray;'>Find about here...</span>
+    <a   href="{% url 'A80Insurance:about' %}"  class='t1' style="color: white">About</a>
+    <span class='t1' style='color:gray;'>Time to buy...</span>
+    <a   href="{% url 'A80Insurance:register'%}"   class='t1' style="color: white">{{timetobuy}}</a>   
+    <span class='t1' style='color:gray;'>Demo web site</span>
+ 
+    <!-- time: 
+      ref: https://www.geeksforgeeks.org/get-current-date-and-time-using-python/
+
+      -->
+
+</footer>
+</div>  
+ 
+
+{% endblock %}
+ 
+ 
+
+
+ 
+ 

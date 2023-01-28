@@ -1,0 +1,55 @@
+  
+ 
+{% extends "main.html" %}
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+ 
+   
+<style>
+
+    body { background-color: black;} 
+    h2 { font-family: arial; color: navajowhite; margin-top: 35px;}
+    .center { margin-left: 200px;}
+    .a1 { color: white; font-size: large; font-family: arial;  margin-top: 25px; }
+
+</style>
+<div class="container">
+
+<div id="center" class="center"></div>
+
+    <h2>Information</h2>
+
+     <div class="row a1">
+          Register - Enter customer information : you will be prompted to select a customer
+             identification number and password. A promotion code will be provided to allow
+             registration.
+     </div>
+      <div class="row a1">
+         Update - Revise customer information.  
+      </div>
+       <div class="row a1">
+          Plan - You must select a plan before you can submit a cliam.
+        </div>
+        <div class="row a1">
+          Claim - Enter and submit a claim. You must select a claim type: medical, dental, etc.
+        </div>
+        <div class="row a1">
+          History - You can view and adjust or copy claims on the history screen.
+        </div> 
+</div>
+
+</div>
+    
+         
+ 
+{% endblock %}
+ 
+ 
+
+
+ 
+ 

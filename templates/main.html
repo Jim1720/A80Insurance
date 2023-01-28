@@ -1,0 +1,166 @@
+<DOCTYPE! html> 
+
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title> A80Insurance</title>
+<link rel="stylesheet" 
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"> 
+</head>
+
+<style>
+
+   .brand1 { font-size: large; font-family: Arial; font-size:x-large; font-weight: bold;
+             font-family: Arial;}
+
+   .pos1 { margin-left: 90px;}
+
+   .npos { margin-top: 20px;}
+
+   html { background-color: black;}
+
+   /* for links */
+      
+   .b3 {
+      margin-left: 20px;
+      font-size: larger;
+      font-family: arial;
+      color: white;
+   }
+
+   .b3:hover {
+
+      color: burlywood;
+
+   }
+
+   .white { color: white;} 
+   
+   /* first link spacing */
+   .a1 {margin-left: 30px;} 
+   
+   /* inter link spacing */
+   .a2 {margin-left: 30px;}
+    
+    li {display: inline}
+
+    .burleywood {color:burlywood}
+
+    .top1 { margin-top: 20px; }
+
+    .logo { color: burlywood; font-size:larger; font-family: arial;}
+ 
+    li:hover { color: gold;} 
+
+   .white-bottom-line { border-bottom: 1px white solid }
+
+   .stick { position: sticky; top:0; width: 100% }
+
+   .solid { z-index: 1 ; opacity: 1;}
+
+</style>
+
+<body>
+ 
+ 
+     <div id="stick" class="solid stick">
+         
+         <ul class="navbar navbar-dark bg-dark white-bottom-line" width="100%">
+
+               {%  if request.session.signIn == "No"   %}
+            
+               <!-- signout links -->
+               <li class="nav-item a2"> 
+                  <a class="nav-link logo"  style="color:aqua"
+                     href="{% url 'A80Insurance:start' %}">A80Insurance</a>
+              </li>
+               <li class="nav-item a1"> 
+                   <a class="b3 nav-link text-light" 
+                      href="{% url 'A80Insurance:start' %}">Start</a>
+               </li>
+               <li class="nav-item a2">
+                   <a class="b3 nav-link text-light" 
+                      href="{% url 'A80Insurance:classic' %}">Classic</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:register' %}">Register</a>  
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:signin' %}">Signin</a>
+               </li> 
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:info' %}">Info</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:about' %}">About</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:admin' %}">Admin</a>
+               </li>
+
+               {% endif %} 
+
+               
+               {%  if request.session.signIn == "Yes"   %}
+
+                 <!-- sign in links -->
+               <li class="nav-item a2"> 
+                  <a class="nav-link logo"  class="burleywood"
+                     href="{% url 'A80Insurance:menu' %}">A80Insurance</a>
+              </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:menu' %}">Menu</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:update' %}">Update</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:claim' %}">Claim</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:history' %}">History</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:plan' %}">Plan</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 nav-link text-light" 
+                     href="{% url 'A80Insurance:signout' %}">Sign Out</a>
+               </li>
+               <li class="nav-item a2">
+                  <a class="b3 burleywood"
+                     href="{% url 'A80Insurance:update' %}">{{request.session.displaycustinfo}}</a>
+               </li>
+
+               {% endif %} 
+
+            </ul>
+     
+      </div>
+      
+ 
+ 
+
+      {% block page %}
+         Body content
+      {% endblock %} 
+
+      
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+
+</body>
+</html>

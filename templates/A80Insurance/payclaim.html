@@ -1,0 +1,87 @@
+
+
+
+{% extends "main.html" %} 
+ 
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+
+
+<style>
+    
+    body { background-color: black; } 
+    
+    .center { margin-left: 300px; }
+ 
+
+    .t3 { margin-top: 50px; }
+
+    .f3 { font-family: arial; font-size: large; }
+
+    .r3 { border-radius: 5px; padding-left: 10px; padding-right: 10px;}
+
+    .white { color: white;}
+
+    .left { margin-left: 350px; }
+
+    .a2 { margin-left: 50px; }
+
+    h2 { margin-bottom: 100px; }
+
+    .down { margin-top: 50px; }
+
+    .dodgerblue { color: dodgerblue; }
+
+    /* offsets from .center */
+ 
+    .p1 { margin-left: 30px; }
+
+    .m3 { margin-left: 15px;} 
+    
+    .n3 { margin-left: 15px;} 
+    
+    .b3 { margin-left: 50px; }
+
+</style> 
+
+<fieldset>  
+<form  action="{% url 'A80Insurance:payclaim'%}"  method="post"> 
+{% csrf_token %}  
+<div class="container">
+    
+     <h2 class="left burleywood">Claim Payment</h2>
+
+     <div id="center" class="center"> 
+
+        <div class="row form-group-row p1">
+            <div class="col-xs-2 r1">
+                <label class="control-label f3 dodgerblue" for="amount">Payment Amount:</label>
+                <br><input class="form-control f3" type="text"  value="{{amount}}"
+                        name="amount" id="amount"> 
+            </div>
+        </div>
+
+        <div id="note" class="white f3 down n3">
+            <p> Please enter payment amount for claim {{claimNumber}}.</p>
+        </div>   
+
+        <div class="b3">
+            <input class="btn-primary t3 r3 f3" type="submit" name="commit" value="Pay Claim"> 
+        </div>   
+
+        <div id="message" class="m3 f3"  style="color:burlywood;  margin-top:20px"> 
+           {{message}}
+        </div>
+
+    </div>
+ 
+    
+    </div> <!-- end center -->
+ </div>   <!-- container -->  
+</fieldset>  
+</form>  
+{% endblock %}

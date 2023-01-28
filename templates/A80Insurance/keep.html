@@ -1,0 +1,90 @@
+<!DOCTYPE html> 
+{% load static %}
+
+{% comment %} 
+
+1. Individual pages are requested. When that happends this layout will be 
+displayed with the page appearing in the id="page".
+
+This is accomplished by each of the pages using extends,
+and this page using include. Both of those refer to 
+named blocks. 
+
+the controllers must a) set page_name = '...html' and request template/app/name.html
+then the extends/includes will properly build the result.
+
+2. load static makes a static directory available.   /app/static/app is the physical
+   directory but the refereince is 'static/app' CSS is there in app.css.
+
+{% endcomment %}
+
+<head>
+<title> A80 Insurance
+</title>
+
+<!-- style links -->
+<!-- bootstrap - must be first before other style sheets -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link href="{% static 'd80insurance/app.css' %}">
+<!-- end of style files-->
+</head>  
+<style> 
+    body { background-color: black ;}
+
+    a:hover { color: gold }
+    a { color: white; font-size: large; margin-left: 25px; font-family: arial; }
+    .toplinkrow { background-attachment: fixed; z-index: 1; margin-top: 4px}
+    .whitebottom { border-bottom: 2px; border-color: white;}
+    .logo { color: burlywood; font-family: arial;}  
+
+</style> 
+<body> 
+
+<div class="container"> 
+    <div class="top-row px-4 toplinkrow whitebottom" style="background-color:black"> 
+        <a href="" class="ml-md-auto logo">A80Insurance</a>  
+
+        {% if signedIn == 'False' %}  
+            <!-- todo use the percent url tags in the hrefs = name of template.. --> 
+            <a href="/" class="ml-md-auto">Splash</a> 
+            <a href="{% url 'e80insurance:classic' %}" class="ml-md-auto">Classic</a> 
+            <a href="{% url 'e80insurance:register' %}" class="ml-md-auto">Register</a> 
+            <a href="{% url 'e80insurance:signin' %}" class="ml-md-auto">Signin</a> 
+            <a href="{% url 'e80insurance:about' %}" class="ml-md-auto">About</a> 
+            <a href="{% url 'e80insurance:admin' %}" class="ml-md-auto">Admin</a>
+            
+        {% endif %}
+
+        {% if signedIn == 'True' %}   
+            <a href="{% url 'e80insurance:claim' %}" class="ml-md-auto">Claim</a> 
+            <a href="{% url 'e80insurance:history' %}" class="ml-md-auto">History</a> 
+            {% if showStyleLink %}  
+                <button @onclick="NextStyle" class="b4 ml-md-auto">@internalClass</button>
+            {% endif %} 
+            {% if showColorLink %}   
+                <!-- color link style removed here style=colorlinkstyle -->
+                <button @onclick="NextColor" class="b4 ml-md-auto">@colorLinkColor</button>
+            {% endif %} 
+            <a href="#" @onclick="signoutCustomer" class="ml-md-auto">Sign Out</a>
+            <a href="/" class="@at ml-md-auto"  style="color:burlywood">@info</a> 
+        {% endif %}
+
+</div></div>  
+<!--- page is set in the controller to fetch the specific linked page -->
+
+ <div id="page">
+    
+    {% if page == 'start' %}  
+       {% include 'a80insurance/start.html' %}
+    {% endif %}
+
+</div>  
+<!-- javascript bootstrap scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+<!-- any additional javascripts local to project here -->
+</body> 
+
+<!-- how to use: -->
+<!-- have each page inherit from links.html and target-page.html and url the target-page. --> 
+</html>

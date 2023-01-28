@@ -1,0 +1,707 @@
+
+
+{% extends "main.html" %} 
+ 
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+
+
+<style>
+
+    
+h1 { color: white; }
+
+body { background-color: black; }  
+
+#center { margin-left: 30%; margin-top: 50px; } 
+
+
+.ba { color: white; background-color: dodgerblue; border-radius: 10px; padding: 5px;
+      font-family: arial; font-size: large; margin-top: 20px; margin-bottom: 20px; }
+
+      
+.ba2 { color: white;  background-color: green; border-radius: 10px; padding: 5px;
+      font-family: arial; font-size: large; margin-top: 20px; margin-bottom: 20px; }
+
+.lit { color: white; font-family: arial; font-size: larger; margin-top: 20px; }
+
+.ps { margin-left: 370px; margin-bottom: 50px; font-family: arial; font-size: x-large; }
+
+.white { color: white; }
+
+.aqua { color: aqua; }
+
+.space { margin-top: 10px; }
+
+.blue { color: dodgerblue;}
+
+.ft { font-size: larger; font-family: arial;}
+
+.top { margin-top: 40px;}
+
+.a1 { margin-left: 120px; }
+
+.f1 { font-family: arial; font-size: larger;}
+
+.btnrow { margin-top: 15px; }
+
+.left1 { margin-left: 200px; }
+
+.left { margin-left: 36px; }
+
+.lefth2 { margin-left: 350px; }
+
+.btnrow { margin-top: 20px; margin-bottom: 20px;}
+
+.g1menu {
+   color: burlywood;
+   border-color: white; 
+   margin-left: 2px;
+}
+
+
+.g1copy { 
+   color: dodgerblue;
+   border-color: white; 
+}
+
+
+.g2pay {
+   color: red;
+   border-color: white; 
+}
+
+.g3adjust {
+   color: yellow;
+   border-color: white; 
+}
+
+.g4stay {
+   color: lightgreen;
+   border-color: white; 
+}
+
+
+.g4 {
+   color: lightgreen;
+   border-color: white; 
+}
+
+
+.g4focus {
+   color: burlywood;
+   border-color: white; 
+}
+
+
+.g4top {
+   color: lightgreen;
+   border-color: white; 
+}
+
+
+.g4mid {
+   color: burlywood;
+   border-color: white; 
+}
+
+
+.g4bot {
+   color: lightcoral;
+   border-color: white; 
+}
+
+
+.g4focus {
+   color: burlywood;
+   border-color: white; 
+}
+
+
+
+.g5new {
+   color: aqua;
+   border-color: white; 
+}
+
+
+
+
+.g5act1 {
+   color: burlywood;
+   border-color: white; 
+}
+
+
+.g5act2 {
+   color: burlywood;
+   border-color: white; 
+}
+
+
+</style> 
+
+<fieldset>  
+    <form  action="{% url 'A80Insurance:history' %}"  method="post"> 
+
+    {% csrf_token %}  
+
+    <div class="container">
+        
+         <h2 class="lefth2 burleywood">Claim History</h2>
+    
+        {% for c in claimsData %} 
+
+             {% if "top" in c.PaymentAction  %} 
+                <div id="top"></div> 
+             {% endif %}
+             
+             {% if "mid" in c.PaymentAction  %} 
+                <div id="mid"></div> 
+             {% endif %} 
+             
+             {% if "bot" in c.PaymentAction  %} 
+                <div id="bot"></div> 
+             {% endif %} 
+
+             {% if "act1" in c.PaymentAction  %} 
+                <div id="act1"></div> 
+             {% endif %} 
+
+             {% if "act2" in c.PaymentAction  %} 
+                <div id="act2"></div> 
+             {% endif %} 
+              
+            <div class="row top">
+                <div class="col-md-3 white ft"> 
+                    Claim  
+                </div>
+                
+                <div class="col-md-3 white ft"> 
+                      Description   
+               </div>
+                <div class="col-md-3 white ft"> 
+                    Claim Type
+                </div>
+                <div class="col-md-3 white ft"> 
+                      Status
+                </div>
+          </div>
+
+          
+          <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                     {{ c.ClaimIdNumber }}
+
+                </div>
+                
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{ c.ClaimDescription  }} 
+
+                </div>
+         
+                <div class="col-md-3 burleywood ft"> 
+
+                    {% if c.ClaimType == "m" %}
+                        Medical 
+
+                    {% elif c.ClaimType == "d" %}
+                        Dental 
+
+                    {% elif c.ClaimType == "v" %}
+                        Vision 
+
+                    {% elif c.ClaimType == "x" %}
+                        Drug
+                     
+                    {% else %}
+
+                        Unknown 
+
+                    {% endif %}
+
+                </div>
+
+                <div class="col-md-3 burleywood ft"> 
+                    {{ c.ClaimStatus  }}   
+                </div>
+
+           </div>  
+
+           <div class="row">
+                <div class="col-md-3 white ft"> 
+                    Patient Name
+                </div>
+                
+              
+                <div class="col-md-3 white ft"> 
+                    Service  
+                </div>
+
+                
+                <div class="col-md-3 white ft"> 
+                    Date  
+                </div>
+
+                <div class="col-md-3 white ft"> 
+                    Seq  
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                     {{ c.PatientFirst }} {{c.PatientLast}}
+
+                </div>
+                
+              
+                <div class="col-md-3 blue ft"> 
+
+                    {{c.Service}}  
+                </div>
+
+                <div class="col-md-3 blue ft"> 
+
+                     {{c.DateService}}
+
+                </div>
+
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{c.Procedure3}}
+
+               </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 white ft"> 
+                    Diagnosis   
+               </div>
+              
+                <div class="col-md-3 white ft"> 
+                    Diagnosis   
+               </div>
+                <div class="col-md-3 white ft"> 
+                    Procedure
+                </div>
+                <div class="col-md-3 white ft"> 
+                    Procedure
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{ c.Diagnosis1  }}  
+
+                </div>
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{c.Diagnosis2}}
+
+                </div>
+
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{ c.Procedure1  }}  
+
+                </div>
+               
+
+                <div class="col-md-3 burleywood ft"> 
+
+                     {{c.Procedure2}}
+
+                </div>
+         
+         
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 white ft"> 
+                    Physician
+                </div>
+                
+                <div class="col-md-3 white ft"> 
+                    Clinic   
+               </div>
+                <div class="col-md-3 white ft"> 
+                    Location
+                </div>
+                <div class="col-md-3 white ft"> 
+                    Referral
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                     {{ c.Physician }} 
+
+                </div>
+                
+                <div class="col-md-3 blue ft"> 
+
+                    {{ c.Clinic  }}  
+
+                </div>
+
+                <div class="col-md-3 blue ft"> 
+
+                    {{ c.Location  }}  
+                </div>
+         
+                <div class="col-md-3 blue ft"> 
+
+                    {{c.Referral}}  
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 white ft"> 
+                    Cost
+                </div>
+                
+                <div class="col-md-3 white ft"> 
+                    Covered   
+               </div>
+                <div class="col-md-3 white ft"> 
+                    Owed
+                </div> 
+                <div class="col-md-3 white ft"> 
+                    Plan
+                </div> 
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                     $ {{ c.TotalCharge }} 
+
+                </div>
+                
+                <div class="col-md-3 burleywood ft"> 
+
+                   $ {{ c.CoveredAmount  }}  
+
+                </div>
+
+                <div class="col-md-3 burleywood ft"> 
+
+                   $ {{ c.BalanceOwed  }}  
+                </div>
+
+                <div class="col-md-3 blue ft"> 
+
+                    {{ c.PlanId }}  
+                </div>
+          
+            </div>
+              
+
+            {% if c.ClaimStatus == "Paid" %} 
+                
+            <div class="row">
+                <div class="col-md-3 white ft"> 
+                    Payment Amount
+                </div>
+                
+                <div class="col-md-3 white ft"> 
+                    Payment Date   
+               </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                     $ {{ c.PaymentAmount }} 
+
+                </div>
+                
+                <div class="col-md-3 aqua ft"> 
+
+                    {{ c.PaymentDate  }}  
+
+                </div>
+            </div> 
+
+            {% endif %}
+
+
+            {% if c.ClaimType == "m" %}
+
+                {% if c.DateConfine != "01/01/1753" or c.DateRelease != "01/01/1753" %}
+
+                <div class="row">
+
+                    {% if c.DateConfine != "01/01/1753" %}
+                        <div class="col-md-3 white ft"> 
+                            Confine Date:
+                        </div>
+                    {% endif %}
+
+                    {% if  c.DateRelease != "01/01/1753" %} 
+                        <div class="col-md-3 white ft"> 
+                            Release Date:   
+                        </div>
+                    {% endif %}
+
+                </div>
+
+                <div class="row">
+
+                    {% if c.DateConfine != "01/01/1753" %}
+                      <div class="col-md-3 burleywood ft">  
+                         {{ c.DateConfine }} 
+                      </div>
+                    {% endif %}
+                    
+                    {% if  c.DateRelease != "01/01/1753" %} 
+                      <div class="col-md-3  burleywood ft">  
+                         {{ c.DateRelease  }} 
+                      </div> 
+                    {% endif %}
+            
+                </div>  
+
+                {% endif %}
+
+            {% endif %}
+
+            {% if c.ClaimType == "d" %}
+
+                <div class="row">
+                    <div class="col-md-3 white ft"> 
+                        Tooth Number:
+                    </div> 
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-3 burleywood ft"> 
+
+                        {{ c.ToothNumber }} 
+
+                    </div>
+                </div>
+
+            {% endif %}
+
+            {% if c.ClaimType == "v" %}
+
+            <div class="row">
+                <div class="col-md-3 white ft"> 
+                    Eye Ware:
+                </div> 
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{ c.Eyeware }} 
+
+                </div>
+            </div>
+
+            {% endif %}
+
+            {% if c.ClaimType == "x" %}
+
+            <div class="row">
+                <div class="col-md-3 white ft"> 
+                    Drug Name:
+                </div> 
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 burleywood ft"> 
+
+                    {{ c.DrugName }} 
+
+                </div>
+            </div>
+
+            {% endif %}
+ 
+            
+            
+            {% if c.ClaimStatus == "Adjustment" %}
+
+                <div class="row">
+                    <div class="col-md-3 white ft"> 
+                        Adjusted Claim:
+                    </div>
+                    
+                    <div class="col-md-3 white ft"> 
+                        Adjusted Date:   
+                    </div>
+                
+                </div> 
+
+                <div class="row">
+
+                    <div class="col-md-3 burleywood ft"> 
+
+                        {{ c.AdjustedClaimId }} 
+
+                    </div>
+                    
+                    <div class="col-md-3 aqua ft"> 
+
+                        {{ c.DateAdded  }}  
+
+                    </div> 
+            
+                </div> 
+            
+            {% endif %}
+
+            
+            
+            {% if c.ClaimStatus == "Adjusted" %}
+
+                <div class="row">
+                    <div class="col-md-3 white ft"> 
+                        Adjusting Claim:
+                    </div>
+                    
+                    <div class="col-md-3 white ft"> 
+                        Adjusted Date:   
+                    </div>
+
+                    <div class="col-md-3 white ft"> 
+                        Adjusting App:  
+                    </div>
+                
+                </div> 
+
+                <div class="row">
+
+                    <div class="col-md-3 burleywood ft"> 
+
+                        {{ c.AdjustingClaimId }} 
+
+                    </div>
+                    
+                    <div class="col-md-3 aqua ft"> 
+
+                        {{ c.AdjustedDate  }}  
+
+                    </div> 
+
+                    <div class="col-md-3 aqua ft"> 
+
+                        {{ c.AppAdjusting  }}  
+
+                    </div> 
+            
+                </div> 
+            
+            {% endif %}
+
+
+
+            <div class="btnrow">
+                
+                <input class="g1menu btn-primary-outline btn left1 t3 r3 f3" type="submit" name="commit" value="Menu"> 
+
+                <input class="g5new btn-primary-outline btn left t3 r3 f3" type="submit" name="commit" value="Claim">  
+ 
+                {% if c.ClaimStatus != "Adjusted" and c.ClaimStatus != "Paid" %}
+
+                     <button class="g3adjust btn-primary-outline btn  left t3 r3 f3" type="submit" name="commit" 
+                             value="Adjust{{c.ClaimIdNumber}}">Adjust</button>
+            
+                
+                     <button class="g2pay btn-primary-outline btn  left t3 r3 f3" type="submit" name="commit" 
+                             value="Pay{{c.ClaimIdNumber}}">Pay</button>
+
+                        
+                 {% endif %}
+
+                 <button class="g1copy btn-primary-outline btn left t3 r3 f3" type="submit" name="commit"
+                        value="Copy{{c.ClaimIdNumber}}">Copy</button>
+
+                <!-- positioning buttons -->
+
+                 <a class="g4top btn-primary-outline btn left t3 r3 f3" 
+                        type="button" name="top"
+                        href="#top"
+                        value="top">Top</a>
+
+                 <a class="g4mid btn-primary-outline btn left t3 r3 f3" 
+                         type="button" name="mid"
+                         href="#mid"
+                         value="mid">Mid</a>
+
+                
+                 <a class="g4bot btn-primary-outline btn left t3 r3 f3" 
+                         type="button" name="bot"
+                         href="#bot"
+                         value="bot">Bot</a>
+
+                {% if showAct1 == "Yes" %}
+
+                    <a class="g5act1 btn-primary-outline btn left t3 r3 f3" 
+                            type="button" name="act1" 
+                            href="#act1"
+                            value="{{actclaim1}}">{{act1}}</a>
+
+                {% endif %} 
+
+                {% if showAct2 == "Yes"  %}
+
+                    <a class="g5act2 btn-primary-outline btn left t3 r3 f3" 
+                            type="button" name="act2"
+                            href="#act2"
+                            value="{{actclaim2}}">{{act2}}</a>
+
+                 {% endif %} 
+
+
+
+
+            </div> 
+    
+         
+    
+         {% endfor %}
+
+    </div>   <!-- container -->  
+
+</fieldset>  
+</form>  
+{% endblock %}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>

@@ -1,0 +1,100 @@
+  
+ 
+{% extends "main.html" %}
+
+{% load static %}  
+
+<link href="{% static 'A80Insurance/app.css' %}">
+ 
+{% block page %}
+  
+<!DOCTYPE html>
+
+<style>
+
+body { background-color: black; }
+
+.left { margin-left: 30%}
+
+label { color: white; font-family: arial; font-size: large;} 
+
+input { color: white; font-family: arial; font-size: large;}
+
+.r1 { margin-left: 10px;}
+
+
+.r2 {  margin-top: 30px; margin-left: 65px; border-radius: 10px; padding-left: 25px; 
+       padding-right: 25px; }
+
+
+.r3 {  margin-top: 20px; margin-left: 40%; border-radius: 10px; padding-left: 25px; 
+    padding-right: 25px; }
+
+#center { margin-left: 35%; margin-top: 50px; }
+
+
+#msg { margin-left: 35%; margin-top: 50px; }
+
+.white { color: white; }
+
+.m1 { margin-left: 02px; margin-top: 40px; }
+
+</style> 
+
+<fieldset> 
+
+ <div class="container">
+
+ <h1 class="left burleywood">Customer Sign In</h1> 
+
+ <form action="{% url 'A80Insurance:signin' %}" method="post">
+
+    {% csrf_token %} 
+    
+ <div id="center">
+
+ <div class="form-group row">
+
+    <div class="col-xs-2 r1">
+         <label class="control-label" for="custId">Customer Id:</label>
+         <br/><input class="form-control" type="text" name="custId" id="custId"
+                     value="{{signin.custid}}"> 
+   </div>
+ </div>
+  
+ <div class="form-group row">
+
+     <div class="col-xs-2 r1">
+         <label class="control-label" for="custpassword">Password:</label>
+         <br><input class="form-control" type="password"   name="custpassword" id="custpassword" 
+                    value="{{signin.custpassword}}"> 
+     </div>
+
+</div> 
+
+
+
+ </div> <!-- center --> 
+
+<div class="form-group row"> 
+    <input class="btn-primary r3" type="submit" name="commit" value="Signin" data-disable-with="Signin">
+  
+</div>
+
+
+<div id="msg" class="form-group row">
+    <label class="m1 label control-label">
+          {{message}} 
+    </label>
+</div>
+
+</fieldset> 
+</form>  
+
+{% endblock %}
+ 
+ 
+
+
+ 
+ 
