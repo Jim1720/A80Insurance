@@ -10,6 +10,8 @@ from django.shortcuts import redirect, render
 import re 
 # environment promotion code
 import os
+# requests
+import requests
 
 from datetime import datetime 
 
@@ -877,7 +879,20 @@ def SigninEdits(request):
 
     apiSelect = "/signin?id=" + custId + "&pw=" + custPassword
     apiString = urlPrefix + apiSelect
-    response = requests.request("GET",apiString)
+
+    #print(f"sign in edits apiString {apiString}")
+
+    try:
+
+       response = requests.request("GET",apiString)
+
+    except:
+      
+       message = "Exception on signin."
+       return message
+
+       
+
     response.encoding = "UTF-8" 
 
     if response == None:
@@ -890,6 +905,11 @@ def SigninEdits(request):
     message = j['Message']
     cust = j['Customer']
     token = '45object stuff decodes' 
+    #print(f"sign in response status {status}")
+    #print(f"signin message {message}")
+
+    #print("signin cust data...")
+    #print(cust)
  
      
     # not found and bad password will return message and Unsuccessful.
@@ -905,6 +925,9 @@ def SigninEdits(request):
  
     request.session['A45Token'] = token
     request.session['custId'] = custId
+
+    emailPattern = j['EmailPattern']
+    request.session['emailPattern'] = emailPattern
 
     DispCustOnMainTopDict(request, cust) 
     
@@ -953,6 +976,7 @@ def CustomerEdits(request, screen):
     confirm = request.POST['encrypted'] # confirm password  
 
     onRegisterScreen = True if screen == "register" else False
+    onUpdateScreen = True if screen == "update" else False
 
     if custId == "" and onRegisterScreen == True: 
         message = "Please enter a Customer Id."
@@ -1052,19 +1076,27 @@ def CustomerEdits(request, screen):
        if promo != environment_promotion_code:   
           return message
  
-    
-    if re.match(emailpattern, custemail) == None or custemail.rstrip() == "":
-        return "Invalid e-mail entered"
+    # A45 server does this automatically for registration.
+    if onUpdateScreen == True:
+       # if re.match(emailpattern, custemail) == None or custemail.rstrip() == "":
+       emailPattern = request.session['emailPattern']
+ 
+
+       # use emailPattern from a45 server register or signin call to check email.
+       # for more flexability.
+       if re.match(emailPattern, custemail) == None or custemail.rstrip() == "":
+          return "Invalid e-mail entered"
 
     if re.match(phonepattern, custphone) == None or custphone.rstrip() == "":
        return "Invalid Phone Number entered" 
 
-    # customer duplicate check
-    c = GetCustomer(request, custId)
+    if onRegisterScreen == True:
+       # customer duplicate check 
+       c = GetCustomer(request, custId)
 
-    # avoid duplication use this session value...
-    if request.session['customerFound'] == "Yes": 
-       return "Duplicate Customer." 
+       # avoid duplication use this session value...
+       if request.session['customerFound'] == "Yes": 
+          return "Duplicate Customer." 
       
 
 
@@ -1481,7 +1513,8 @@ def RegisterCustomerSave(request, cust):
            return message
      
 
-       j = response.json()
+       j = response.json() 
+       
        status = j['Status']
        message = j['Message']
        cust = j['Customer']
@@ -1502,6 +1535,10 @@ def RegisterCustomerSave(request, cust):
  
        request.session['A45Token'] = token
        request.session['custId'] = custId
+
+       emailPattern = j['EmailPattern']
+       request.session['emailPattern'] = emailPattern
+ 
 
        good = ""
        return good
@@ -1550,6 +1587,8 @@ def GetCustomerData(request, custId):
        return customer
 
 def GetCustomer(request,custId):
+
+       #print(f"get customer dup check cust id used is: {custId}")
 
        request.session['customerFound'] = "No"
 
@@ -2516,8 +2555,7 @@ def EditCustomerResetFields(request):
 
     # reset must not exist 
     
-     result = GetCustomerData(request, newCustId)
-     print(f"admin new cust exist check result: {result}")
+     result = GetCustomerData(request, newCustId) 
      found = result != None
      if(found):
         message = "Reset Customer already exists." 
@@ -2685,6 +2723,7 @@ def ListCustomers(request):
            custDictEntry = {
 
             'custId' : r['custId'],
+            'custPassword' : r['custPassword'],
             'custFirst' : r['custFirst'],
             'custLast' : r['custLast'],
             'appId' : r['appID'] 
